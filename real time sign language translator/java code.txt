@@ -1,0 +1,22 @@
+import org.opencv.core.*;
+import org.opencv.videoio.VideoCapture;
+import org.opencv.highgui.HighGui;
+
+public class SignLang {
+    static { System.loadLibrary(Core.NATIVE_LIBRARY_NAME); }
+
+    public static void main(String[] args) {
+        VideoCapture cam = new VideoCapture(0);
+        Mat frame = new Mat();
+
+        while (cam.read(frame)) {
+
+            String text = "HELLO"; // Example output (replace with ML logic)
+
+            HighGui.imshow(text, frame);
+
+            if (HighGui.waitKey(30) == 27) break;
+        }
+        cam.release();
+    }
+}
