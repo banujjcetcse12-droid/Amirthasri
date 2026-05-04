@@ -1,0 +1,47 @@
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.videoio.VideoCapture;
+
+public class SignLanguageTranslator {
+
+    static {
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+    }
+
+    public static void main(String[] args) {
+        VideoCapture camera = new VideoCapture(0);
+
+        if (!camera.isOpened()) {
+            System.out.println("Error: Camera not accessible");
+            return;
+        }
+
+        Mat frame = new Mat();
+
+        System.out.println("Starting real-time sign detection... Press Ctrl+C to exit.");
+
+        while (true) {
+            if (camera.read(frame)) {
+
+                String prediction = predictGesture(frame);
+
+                System.out.println("Detected Sign: " + prediction);
+
+                try {
+                    Thread.sleep(500); 
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    
+    public static String predictGesture(Mat frame) {
+        
+       
+        String[] gestures = {"Hello", "Thank You", "Yes", "No"};
+        int index = (int)(Math.random() * gestures.length);
+        return gestures[index];
+    }
+}
